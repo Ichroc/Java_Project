@@ -3,7 +3,7 @@ package model.personne;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Personne {
+public abstract class Personne {
     protected String name;
     protected LocalDate dateOfBirth;
     protected String mdp;
@@ -55,6 +55,7 @@ public class Personne {
         }
         Personne personne = (Personne) o;
         return Objects.equals(name, personne.name) && Objects.equals(dateOfBirth, personne.dateOfBirth) && Objects.equals(mdp, personne.mdp) && Objects.equals(identifiant, personne.identifiant);
+        // Si on n'a pas besoin de l'identifiant, on peut éviter de le comparer ici.
     }
 
     @Override

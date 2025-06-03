@@ -42,17 +42,17 @@ public class Joueur extends Participant{
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         if (!super.equals(o)) return false;
         Joueur joueur = (Joueur) o;
-        return Float.compare(taille, joueur.taille) == 0 && Objects.equals(nationnality, joueur.nationnality);
+        return Float.compare(taille, joueur.taille) == 0 && Objects.equals(nationnality, joueur.nationnality) && Objects.equals(surname, joueur.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), nationnality, taille);
+        return Objects.hash(super.hashCode(), nationnality, taille, surname);
     }
 
     @Override
@@ -65,6 +65,7 @@ public class Joueur extends Participant{
         sb.append(nationnality);
         sb.append("\nTaille : ");
         sb.append(taille);
+        sb.append("\nNom complet : ").append(name).append(" ").append(surname.toUpperCase());
         return sb.toString();
     }
 }
