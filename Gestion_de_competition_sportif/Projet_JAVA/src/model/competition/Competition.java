@@ -13,4 +13,6 @@ public class Competition {
     private String sport;                          // Type de sport
     private List<Match> matchs;                    // Liste des matchs prévus
     private List<Participant> participants;        // Équipes ou joueurs inscrit
+    private String status;                         // Statut de la compétition
+    private String level;                          // Niveau de la compétition
 }
