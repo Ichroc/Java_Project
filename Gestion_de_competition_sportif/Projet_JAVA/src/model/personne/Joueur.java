@@ -3,7 +3,7 @@ package model.personne;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Joueur extends Participant{
+public class Joueur extends Personne {
 
     private String nationnality;
     private float taille;

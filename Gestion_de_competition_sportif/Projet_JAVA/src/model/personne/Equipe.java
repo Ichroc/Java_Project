@@ -1,63 +1,71 @@
 package model.personne;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class Equipe extends Participant {
+public class Equipe {
+    private String nom;
+    private final int nombreMaxJoueurs;
+    private final List<Joueur> joueurs;
 
-    private List<Joueur> membres;
+    // Liste statique de toutes les équipes
+    private static final List<Equipe> toutesLesEquipes = new ArrayList<>();
 
-    public Equipe(String name, LocalDate dateOfBirth, String mdp, String identifiant, List<Joueur> membres) {
-        super(name, dateOfBirth, mdp, identifiant);
-        // Sécurise la liste contre les nulls
-        this.membres = (membres != null) ? membres : new ArrayList<>();
+    public Equipe(String nom, int nombreMaxJoueurs) {
+        this.nom = nom;
+        this.nombreMaxJoueurs = nombreMaxJoueurs;
+        this.joueurs = new ArrayList<>();
+        toutesLesEquipes.add(this); // Ajoute automatiquement l'équipe à la liste globale
     }
 
-    public List<Joueur> getMembres() {
-        return membres;
+    public String getNom() {
+        return nom;
     }
 
-    public void setMembres(List<Joueur> membres) {
-        this.membres = (membres != null) ? membres : new ArrayList<>();
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public void addMember(Joueur joueur) {
-        if (joueur != null) {
-            this.membres.add(joueur);
+    public int getNombreMaxJoueurs() {
+        return nombreMaxJoueurs;
+    }
+
+    public List<Joueur> getJoueurs() {
+        return joueurs;
+    }
+
+    public int getNombreJoueursActuels() {
+        return joueurs.size();
+    }
+
+    public boolean ajouterJoueur(Joueur joueur) {
+        if (joueurs.size() < nombreMaxJoueurs && !joueurs.contains(joueur)) {
+            joueurs.add(joueur);
+            return true;
         }
+        return false;
     }
 
-    public void removeMember(Joueur joueur) {
-        this.membres.remove(joueur);
-    }
-
-    public int getNbJoueurs() {
-        return membres.size();
+    public boolean retirerJoueur(Joueur joueur) {
+        return joueurs.remove(joueur);
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(super.toString());
-        sb.append("\nMembres : ");
-        for (Joueur joueur : membres) {
-            sb.append("\n - ").append(joueur.getName()).append(" (").append(joueur.getSurname()).append(")");
+        return "Équipe: " + nom + " (" + joueurs.size() + "/" + nombreMaxJoueurs + " joueurs)";
+    }
+
+    // ✅ Méthode statique pour trouver une équipe et y ajouter un joueur
+    public static boolean ajouterJoueurParNomEquipe(String nomEquipe, Joueur joueur) {
+        for (Equipe equipe : toutesLesEquipes) {
+            if (equipe.getNom().equalsIgnoreCase(nomEquipe)) {
+                return equipe.ajouterJoueur(joueur);
+            }
         }
-        return sb.toString();
+        return false; // Aucune équipe trouvée
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!super.equals(o)) return false;
-        if (o == null || getClass() != o.getClass()) return false;
-        Equipe equipe = (Equipe) o;
-        return Objects.equals(membres, equipe.membres);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), membres);
+    public static List<Equipe> getToutesLesEquipes() {
+        return toutesLesEquipes;
     }
 }

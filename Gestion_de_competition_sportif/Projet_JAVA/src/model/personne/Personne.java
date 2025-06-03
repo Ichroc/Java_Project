@@ -36,10 +36,6 @@ public abstract class Personne {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
